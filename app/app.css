@@ -1,15 +1,179 @@
-@import "tailwindcss";
-
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+/* Global Styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  margin: 0;
+  padding: 0;
+  background-color: #f0f2f5; /* Slightly softer background */
+  color: #333;
+  line-height: 1.6;
 }
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
+.container {
+  width: 90%; /* Increase width for better use of space */
+  max-width: 1200px; /* Max width for large screens */
+  margin: 20px auto; /* Add some top/bottom margin */
+  padding: 20px;
+  background-color: transparent; /* Container itself is transparent, sections will have background */
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+h1 { /* Main application title */
+  text-align: center;
+  color: #2c3e50; /* Darker, more professional blue */
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+
+h2 { /* Section titles */
+  text-align: center;
+  color: #34495e; /* Slightly lighter blue-gray for section titles */
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  border-bottom: 2px solid #e0e0e0; /* Subtle separator */
+  padding-bottom: 10px;
+}
+
+/* Section Container Styles (for Admin, User Params, Results) */
+.section-container {
+  background-color: #ffffff; /* White background for sections */
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Softer, more modern shadow */
+  margin-bottom: 30px; /* Space between sections */
+}
+
+/* Unified Form Styling */
+.form-grid { /* Used by AdminSettings and UserParameters forms */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust minmax for better fit */
+  gap: 20px; /* Consistent gap */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-size: 0.95rem; /* Slightly larger for readability */
+  color: #555;
+  font-weight: 600;
+}
+
+.form-group input[type="number"],
+.form-group input[type="text"],
+.form-group input[type="date"] {
+  padding: 12px;
+  border: 1px solid #ccc; /* Slightly darker border for better contrast */
+  border-radius: 5px; /* Slightly more rounded */
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.2); /* Softer focus glow */
+}
+
+/* Specific Component Container Styles (if needed for overrides or minor tweaks) */
+/* .admin-settings-container, .user-parameters-container, .results-table-container now use .section-container */
+
+/* Calculate Button Style */
+.calculate-button {
+  grid-column: 1 / -1; /* Span all columns in its grid context */
+  padding: 12px 25px;
+  font-size: 1.15rem; /* Slightly larger text */
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff; /* Primary blue */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+  margin-top: 15px; /* Space above button */
+}
+
+.calculate-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-1px); /* Subtle lift effect */
+}
+
+.calculate-button:active {
+  transform: translateY(0); /* Click effect */
+}
+
+
+/* Results Table Styles */
+.results-table-container { /* Uses .section-container now for background/padding/shadow */
+  overflow-x: auto; /* Keep horizontal scroll for table */
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  /* Shadow is now on .section-container */
+}
+
+.results-table th,
+.results-table td {
+  border: 1px solid #e0e0e0; /* Lighter border for a cleaner look */
+  padding: 12px 15px; /* More padding */
+  text-align: left;
+  white-space: nowrap;
+}
+
+.results-table th {
+  background-color: #f8f9fa; /* Very light grey for headers */
+  font-weight: 600; /* Standard bold for headers */
+  color: #495057; /* Dark grey text for headers */
+  text-transform: uppercase; /* Uppercase headers for distinction */
+  letter-spacing: 0.5px;
+}
+
+.results-table tbody tr:nth-child(even) {
+  background-color: #fdfdfd; /* Subtler zebra striping */
+}
+
+.results-table tbody tr:hover {
+  background-color: #f1f5f8; /* Light blueish hover */
+}
+
+/* No Results Message Style */
+.no-results-message {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #6c757d; /* Bootstrap's muted text color */
+  margin-top: 20px;
+  padding: 30px; /* More padding */
+  background-color: #fff; /* Keep white, but it's inside a .section-container now */
+  border-radius: 8px;
+  /* box-shadow: 0 2px 5px rgba(0,0,0,0.05); Shadow is on .section-container */
+}
+
+/* Renaming component specific containers to use the generic .section-container */
+/* These classes are still used in the TSX files to wrap the content, so they map to .section-container */
+.admin-settings-container,
+.user-parameters-container {
+  /* These now primarily inherit from .section-container. */
+  /* Specific overrides can go here if necessary, but the goal was to unify. */
+}
+
+/* Ensure form inside these containers use the form-grid */
+.admin-settings-form {
+  /* This class is in AdminSettings.tsx, should map to .form-grid if it's the direct child for grid layout */
+  /* If it's a direct child, can remove this and apply .form-grid in TSX */
+  /* For now, assuming it's the grid container: */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.user-parameters-form {
+   /* This class is in UserParameters.tsx, should map to .form-grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
 }
